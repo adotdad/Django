@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="templates/main.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div id="main-content" class="col-md-9">
+            <h1 align="center"> سامانه‌ی انجام کار</h1>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>عنوان کار</th>
+                    <th>ارزش کار</th>
+                    <th>تخمین زمانی</th>
+                    <th>صاحب کار</th>
+                    <th>توضیحات</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for j in page_obj %}
+                <tr>
+                    <td>{{j.title}}</td>
+                    <td>{{j.value}} تومان</td>
+                    <td>{{j.approx_time}} روز</td>
+                    <td>{{j.employer}}</td>
+                    <td>
+                        <a href="{% url 'details' j.id %}" class="btn btn-default">توضیحات بیشتر</a>
+                    </td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td>آب حوض کشی</td>
+                    <td>۱۰۰۰ تومان</td>
+                    <td>۲ روز</td>
+                    <td>غلام</td>
+                    <td>
+                        <a href="details.html" class="btn btn-default">توضیحات بیشتر</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>نوشتن تمرینای احتمال</td>
+                    <td>۲۰۰۰ تومان</td>
+                    <td>۱ روز</td>
+                    <td>مهشید</td>
+                    <td>
+                        <a href="details.html" class="btn btn-default">توضیحات بیشتر</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>کار خیلی سخت</td>
+                    <td>۱۰۰۰۰ تومان</td>
+                    <td>۷ روز</td>
+                    <td>مهندس کریمی</td>
+                    <td>
+                        <a href="details.html" class="btn btn-default">توضیحات بیشتر</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div id="tasks-paginator">
+                <ul class="pagination">
+                    {% for i in range %}
+                    {% if page_obj.number == i %}
+                    <li class="active"><a href="{% url 'index_with_page' i %}">{{i}}</a></li>
+                    {% else %}
+                    <li><a href="{% url 'index_with_page' i %}">{{i}}</a></li>
+                    {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-3">
+            {% if user.newuser.contractor %}
+            <h5>شما با نام کاربری {{user}} به عنوان کارگزار وارد سیستم شده‌اید.</h5>
+            {% else %}
+            <h5>شما با نام کاربری {{user}} به عنوان پیمانکار وارد سیستم شده‌اید.</h5>
+            {% endif %}
+            <a href="/new_task" class="btn btn-default btn-block">اضافه کردن کار</a>
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-default btn-block">خروج</button>
+            </form>
+        </div>
+    </div>
+    <footer>
+        <hr/>
+        <span> درباه‌ی ما</span>
+        <span>قوانین</span>
+    </footer>
+</div>
+</body>
+</html>

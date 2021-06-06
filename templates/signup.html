@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="templates/main.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width-1000px, initial-scale=1">
+</head>
+<body>
+<div class="container-fluid" style="display: flex; flex-wrap: wrap;">
+    <div class="col-md-3" style="left: 36%; top: 10%; position: absolute;">
+        <h1 align="center">ثبت نام</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <input name="username" maxlength="100" class="form-control" placeholder="نام‌کاربری">
+            </div>
+            <div class="form-group">
+                <input name="email" value="{{email}}" class="form-control" placeholder="ایمیل" type="email">
+            </div>
+            <div class="form-group">
+                <input name="password" class="form-control" placeholder="رمزعبور" type="password">
+            </div>
+            <div class="form-group">
+                <input name="password_rpt" class="form-control" placeholder="تکرار رمز عبور" type="password">
+            </div>
+            <div class="form-group">
+                <label><input name="master" type="checkbox">کارفرما</label>
+            </div>
+            <button type="submit" class="btn btn-default btn-block">ثبت نام</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
