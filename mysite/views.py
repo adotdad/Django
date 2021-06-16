@@ -29,7 +29,7 @@ def index_with_page(request, i):
         return email_authentication(request)
 
     data = Job.objects.all()
-    paginator = Paginator(data, 1)
+    paginator = Paginator(data, 2)
 
     page_number = i
     request.session['page'] = i
@@ -52,7 +52,7 @@ def index(request):
         return email_authentication(request)
 
     data = Job.objects.all()
-    paginator = Paginator(data, 1)
+    paginator = Paginator(data, 2)
     try:
         page_obj = paginator.get_page(request.session.get('page'))
         if request.user.is_authenticated:
@@ -127,7 +127,7 @@ def signup(request, email):
                 user = NewUser.objects.create(
                     user=User.objects.create_user(form.data['username'], form.data['email'], form.data['password']),
                     contractor=False)
-            user.user.is_active = False
+            user.user.is_active = True
             user.save()
             send_mail(request, user.user)
             return HttpResponse('Please confirm your email address to complete the registration.')
@@ -163,6 +163,7 @@ def activate(request, uidb64, token):
     print(token)
     try:
         username = redis.get(token)
+
         user = User.objects.get(username=username.decode("utf-8"))
     except(TypeError, ValueError, OverflowError, User.DoesNotExist):
         user = None
